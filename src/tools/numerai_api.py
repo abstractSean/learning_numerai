@@ -27,6 +27,10 @@ def get_current_round():
 
 
 def get_dataset_url():
-    
     dataset_query = {'query':'{dataset}'}
     return numerai_api_query(dataset_query)['data']['dataset']
+
+
+def get_dataset_round(dataset_url):
+    return dataset_url.split('/')[3]
+
