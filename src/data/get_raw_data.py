@@ -36,9 +36,9 @@ def download_dataset_as_df(dataset_url):
     
         with ZipFile(BytesIO(dataset_download)) as dataset_zip:
             with dataset_zip.open('numerai_training_data.csv') as train_data:
-                df_train = pd.read_csv(train_data)
+                df_train = pd.read_csv(train_data, index_col='id')
             with dataset_zip.open('numerai_tournament_data.csv') as live_data:
-                df_live = pd.read_csv(live_data)
+                df_live = pd.read_csv(live_data, index_col='id')
             
     return pd.concat([df_train, df_live])
 
