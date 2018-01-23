@@ -3,31 +3,14 @@
 import logging
 import os
 import pandas as pd
+import sys
+sys.path.append('../..')
 
 from dotenv import find_dotenv, load_dotenv
 from io import BytesIO
 from requests import Session
+from src.tools.numerai_api import get_dataset_url, get_dataset_round
 from zipfile import ZipFile
-
-
-def numerai_api_query(query):
-    numerai_api_url = 'https://api-tournament.numer.ai/'
-    headers = {'Content-Type':'application/json',
-               'Accept':'application/json'
-              }
-    with Session() as r:
-        return r.post(url=numerai_api_url,
-                      json=query,
-                      headers=headers).json()
-
-
-def get_dataset_url():
-    dataset_query = {'query':'{dataset}'}
-    return numerai_api_query(dataset_query)['data']['dataset']
-
-
-def get_dataset_round(dataset_url):
-    return dataset_url.split('/')[3]
 
 
 def download_dataset_as_df(dataset_url):
