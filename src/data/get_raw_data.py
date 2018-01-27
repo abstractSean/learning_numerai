@@ -4,7 +4,7 @@ import logging
 import os
 import pandas as pd
 import sys
-sys.path.append('../..')
+sys.path.append('/home/sean/Projects/numerai/numerai/')
 
 from dotenv import find_dotenv, load_dotenv
 from io import BytesIO
