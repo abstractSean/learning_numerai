@@ -5,7 +5,7 @@ import numpy as np
 import os
 import pandas as pd
 import sys
-sys.path.append('/home/sean/Projects/numerai/numerai/')
+sys.path.append('/home/sean/Projects/learning_numerai/')
 
 from dotenv import find_dotenv, load_dotenv
 from io import BytesIO
@@ -15,6 +15,7 @@ from zipfile import ZipFile
 
 
 def download_dataset_as_df(dataset_url):
+    logger = logging.getLogger(__name__)
     with Session() as r:
         dataset_download = r.get(dataset_url, stream=True).content
         logger.info('Download finished, unzipping into dataframe')
