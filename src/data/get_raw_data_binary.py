@@ -1,6 +1,7 @@
-#!/home/sean/virtualenvs/numerai36/bin/python
+#!/home/sean/virtualenvs/numerai/bin/python
 
 import logging
+import numpy as np
 import os
 import pandas as pd
 import sys
@@ -25,6 +26,14 @@ def download_dataset_as_df(dataset_url):
             
     return pd.concat([df_train, df_live])
 
+def df_to_numeric(df):
+    df.loc[:,'feature1':'feature50'] = (df.loc[:,'feature1':'feature50']
+                                        .astype(np.float32, errors='ignore'))
+    df.loc[:,'era'] = df.loc[:,'era'].map(lambda x: x[3:])
+    df.loc[:,['era','target']] = (df.loc[:,['era','target']]
+                                  .apply(pd.to_numeric, errors='coerce', downcast='integer'))
+    return df
+
 
 def main(project_dir):
     
@@ -43,7 +52,7 @@ def main(project_dir):
                         round_number, dataset_filename))
     else:
         logger.info("Downloading data for round {}".format(round_number))
-        df = download_dataset_as_df(dataset_url)    
+        df = df_to_numeric(download_dataset_as_df(dataset_url))    
         df.to_pickle(raw_data_file)
         logger.info("Dataset for round {} downloaded as {}".format(
                         round_number, dataset_filename))
