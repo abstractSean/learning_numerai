@@ -72,8 +72,12 @@ target/
 # Spyder
 .spyproject/
 
+# VIM
+*.swp
+
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
 # exclude data from source control by default
 /data/
+*.csv
