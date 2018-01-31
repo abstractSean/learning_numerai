@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import sys
 sys.path.append('/home/sean/Projects/learning_numerai/')
+sys.path.append('/home/sean/Projects/numerai/numerai')
 
 from dotenv import find_dotenv, load_dotenv
 from io import BytesIO
@@ -31,9 +32,14 @@ def download_dataset_as_df(dataset_url):
 def df_to_numeric(df):
     df.loc[:,'feature1':'feature50'] = (df.loc[:,'feature1':'feature50']
                                         .astype(np.float32, errors='ignore'))
-    df.loc[:,'era'] = df.loc[:,'era'].map(lambda x: x[3:])
-    df.loc[:,['era','target']] = (df.loc[:,['era','target']]
-                                  .apply(pd.to_numeric, errors='coerce', downcast='integer'))
+    df.loc[:,'era'] = (df.loc[:,'era'].map(lambda x: x[3:])
+                                      .apply(pd.to_numeric, 
+                                            errors='coerce')) 
+    df.loc[:,['era', 'target']] = (df.loc[:,['era', 'target']]
+                                  .fillna(-99)
+                                  .apply(pd.to_numeric, 
+                                         errors='coerce', 
+                                         downcast='integer'))
     return df
 
 
