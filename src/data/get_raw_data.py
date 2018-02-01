@@ -17,6 +17,7 @@ from zipfile import ZipFile
 
 def download_dataset_as_df(dataset_url):
     logger = logging.getLogger(__name__)
+
     with Session() as r:
         dataset_download = r.get(dataset_url, stream=True).content
         logger.info('Download finished, unzipping into dataframe')
@@ -26,26 +27,34 @@ def download_dataset_as_df(dataset_url):
                 df_train = pd.read_csv(train_data, index_col='id')
             with dataset_zip.open('numerai_tournament_data.csv') as live_data:
                 df_live = pd.read_csv(live_data, index_col='id')
-        logger.info('Data unzipped, concatenating into one dataframe')
+
+    logger.info('Data unzipped, concatenating into one dataframe')
     return pd.concat([df_train, df_live])
 
+
 def df_to_numeric(df):
+    logger = logging.getLogger(__name__)
+
+    logger.info('Downcasting features to float32')
     df.loc[:,'feature1':'feature50'] = (df.loc[:,'feature1':'feature50']
                                         .astype(np.float32, errors='ignore'))
+
+    logger.info('Converting era to numeric')
     df.loc[:,'era'] = (df.loc[:,'era'].map(lambda x: x[3:])
                                       .apply(pd.to_numeric, 
                                             errors='coerce')) 
+
+    logger.info('Downcasting era and target to integers')
     df.loc[:,['era', 'target']] = (df.loc[:,['era', 'target']]
                                   .fillna(-99)
                                   .apply(pd.to_numeric, 
                                          errors='coerce', 
                                          downcast='integer'))
+
     return df
 
 
 def main(project_dir):
-    
-    # get logger
     logger = logging.getLogger(__name__)
     logger.info('Getting raw data')
 
@@ -55,20 +64,22 @@ def main(project_dir):
     raw_data_path = os.path.join(project_dir, 'data', 'raw')    
     raw_data_file = os.path.join(raw_data_path, dataset_filename)
     
-    if dataset_filename in [csv for csv in os.listdir(raw_data_path)]:
+    if dataset_filename in [pkl for pkl in os.listdir(raw_data_path)]:
         logger.info("Dataset for round {} already downloaded as {}".format(
                         round_number, dataset_filename))
     else:
         logger.info("Downloading data for round {}".format(round_number))
         df = download_dataset_as_df(dataset_url)
+
         logger.info('Data concatenated, downcasting data')
         df = df_to_numeric(df)
+
         logger.info('Data converted, saving to file')
         df.to_pickle(raw_data_file)
+
         logger.info("Dataset for round {} downloaded as {}".format(
                         round_number, dataset_filename))
         
-
 
 if __name__ == '__main__':
     # get project root directory
@@ -85,7 +96,3 @@ if __name__ == '__main__':
 
     # call the main
     main(project_dir)
-    
-    
-    
-    
