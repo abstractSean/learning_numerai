@@ -28,7 +28,7 @@ def get_validation_log_loss(df, model):
 
 def load_data():
     round_number = numerai_api.get_current_round()
-    raw_data_path = os.path.join(os.path.pardir, os.path.pardi, 'data','raw')
+    raw_data_path = os.path.join(os.path.pardir, 'data','raw')
     raw_data_file = os.path.join(raw_data_path, '{}_numerai_raw.pkl'.format(round_number))
 
     try:
