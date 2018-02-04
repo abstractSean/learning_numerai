@@ -41,14 +41,14 @@ def df_to_numeric(df):
 
     logger.info('Converting era to numeric')
     df.loc[:,'era'] = (df.loc[:,'era'].map(lambda x: x[3:])
-                                      .apply(pd.to_numeric, 
-                                            errors='coerce')) 
+                                      .apply(pd.to_numeric,
+                                            errors='coerce'))
 
     logger.info('Downcasting era and target to integers')
     df.loc[:,['era', 'target']] = (df.loc[:,['era', 'target']]
                                   .fillna(-99)
-                                  .apply(pd.to_numeric, 
-                                         errors='coerce', 
+                                  .apply(pd.to_numeric,
+                                         errors='coerce',
                                          downcast='integer'))
 
     return df
@@ -61,9 +61,9 @@ def main(project_dir):
     dataset_url = get_dataset_url()
     round_number = get_dataset_round(dataset_url)
     dataset_filename = '{}_numerai_raw.pkl'.format(round_number)
-    raw_data_path = os.path.join(project_dir, 'data', 'raw')    
+    raw_data_path = os.path.join(project_dir, 'data', 'raw')
     raw_data_file = os.path.join(raw_data_path, dataset_filename)
-    
+
     if dataset_filename in [pkl for pkl in os.listdir(raw_data_path)]:
         logger.info("Dataset for round {} already downloaded as {}".format(
                         round_number, dataset_filename))
@@ -79,12 +79,12 @@ def main(project_dir):
 
         logger.info("Dataset for round {} downloaded as {}".format(
                         round_number, dataset_filename))
-        
+
 
 if __name__ == '__main__':
     # get project root directory
     project_dir = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
-    
+
     # setup logger
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
