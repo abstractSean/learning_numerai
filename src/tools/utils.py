@@ -8,6 +8,19 @@ from src.data import get_raw_data
 from src.tools import numerai_api
 
 
+def check_consistency(df, model):
+    eras_passed = 0
+    unique_eras = df.loc[df['data_type']=='validation',:].era.unique()
+
+    for era in unique_eras:
+        loss = get_validation_log_loss(df.loc[df['era']==era,:], model)
+
+        if loss < 0.693:
+            eras_passed += 1
+
+    return eras_passed / len(unique_eras)
+
+
 def create_submission(df, model, filename='predictions.csv'):
     features = [feat for feat in df.columns if 'feature' in feat]
     df['probability'] = model.predict_proba(df.loc[:,features])[:,1]
