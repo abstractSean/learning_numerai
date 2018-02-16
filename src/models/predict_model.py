@@ -50,12 +50,12 @@ def main():
     model, features = train_RFC.train_rfc_filtered(X_train, y_train)
 
     logger.info('Predict')
-    df_predict = predict_with_noise(df, model, features, 0.012)
+    df_predict = predict_with_noise(df, model, features, 0.0)
 
     round_number = numerai_api.get_current_round()
     filename = 'predictions_RFC_{}.csv'.format(round_number)
 
-    create_submission(df_predict, filename)
+    create_submission_file(df_predict, filename)
 
     napi = get_napi()
 
