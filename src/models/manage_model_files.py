@@ -25,18 +25,18 @@ def get_latest_file_id(model_name):
         return 0
 
 
-def get_id(id_):
+def get_id(model_name, id_):
     if id_ == 'last':
-        return get_latest_file_id()
+        return get_latest_file_id(model_name)
     elif id_ == 'new':
-        return get_latest_file_id() + 1
+        return get_latest_file_id(model_name) + 1
     else:
         return int(id_)
 
 
 def get_filename(model_name, id_):
     round_number = numerai_api.get_current_round()
-    id_ = get_id(id_)
+    id_ = get_id(model_name, id_)
     return '{}_{}_id{}.pkl'.format(round_number, model_name, id_)
 
 
