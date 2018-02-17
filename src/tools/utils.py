@@ -7,6 +7,7 @@ sys.path.append('/home/sean/Projects/numerai/numerai')
 from src.data import get_raw_data
 from src.tools import numerai_api
 
+from sklearn.metrics import log_loss
 
 def check_consistency(df, model):
     eras_passed = 0
