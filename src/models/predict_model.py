@@ -21,7 +21,6 @@ def predict_with_noise(df, model, features, noise=0.0):
     df_features = df_predict.drop(drop_columns, axis=1).iloc[:,features]
     df_predict.loc[:,'probability'] = model.predict_proba(df_features)[:,1]
     df_predict.loc[:,'probability'] = df_predict.loc[:,'probability'] + random.uniform(-noise,noise)
-                                      
     return df_predict
 
 def create_submission_file(df, filename):
@@ -35,19 +34,18 @@ def get_napi():
     load_dotenv(dotenv_path)
     public_id = os.environ.get('NUMERAI_SUBMIT_ID')
     secret_key = os.environ.get('NUMERAI_SUBMIT_KEY')
-    
     return numerapi.NumerAPI(public_id, secret_key, verbosity='info')
 
 def main(noise=0.0):
     logger.info('Get data')
     df = utils.load_data()
-    
+
     X_train = df.loc[df['data_type']=='train','feature1':'feature50']
-    y_train = df.loc[df['data_type']=='train', 'target'] 
+    y_train = df.loc[df['data_type']=='train', 'target']
 
     logger.info('Train model')
     try:
-        model, features = load_model('rfc_filtered') 
+        model, features = load_model('rfc_filtered')
     except FileNotFoundError:
         model, features = train_RFC.train_rfc_filtered(X_train, y_train)
         save_model((model, features),'rfc_filtered')
