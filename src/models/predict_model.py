@@ -16,18 +16,10 @@ from src.models.manage_model_files import *
 def predict_with_noise(df, model, features, noise=0.0):
     df = df.loc[(df['data_type'] != 'train'),:]
     drop_columns = ['era','data_type', 'target']
-<<<<<<< HEAD
-    df_features = df_predict.drop(drop_columns, axis=1).iloc[:,features]
-    df_predict.loc[:,'probability'] = model.predict_proba(df_features)[:,1]
-    df_predict.loc[:,'probability'] = df_predict.loc[:,'probability'] + random.uniform(-noise,noise)
-    return df_predict
-=======
     df = df.drop(drop_columns, axis=1).iloc[:,features]
     df['probability'] = model.predict_proba(df)[:,1]
     df['probability'] = df['probability'] + random.uniform(-noise,noise)
-                                      
     return df
->>>>>>> 8b729673a7659f0bc33c7c4c743c07d49b33bb9a
 
 def create_submission_file(df, filename):
     df['id'] = df.index
@@ -38,14 +30,8 @@ def create_submission_file(df, filename):
 def get_napi(user='NUMERAI'):
     dotenv_path = find_dotenv()
     load_dotenv(dotenv_path)
-<<<<<<< HEAD
-    public_id = os.environ.get('NUMERAI_SUBMIT_ID')
-    secret_key = os.environ.get('NUMERAI_SUBMIT_KEY')
-=======
     public_id = os.environ.get('{}_SUBMIT_ID'.format(user))
     secret_key = os.environ.get('{}_SUBMIT_KEY'.format(user))
-    
->>>>>>> 8b729673a7659f0bc33c7c4c743c07d49b33bb9a
     return numerapi.NumerAPI(public_id, secret_key, verbosity='info')
 
 def main(noise=0.0):
