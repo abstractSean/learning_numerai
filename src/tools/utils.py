@@ -37,8 +37,9 @@ def get_validation_log_loss(df, model):
     return log_loss(df_val_target, df_val_prediction)
 
 
-def load_data():
-    round_number = numerai_api.get_current_round()
+def load_data(round_number=False):
+    if not round_number:
+        round_number = numerai_api.get_current_round()
     project_dir = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
     raw_data_path = os.path.join(project_dir, 'data','raw')
     raw_data_file = os.path.join(raw_data_path, '{}_numerai_raw.pkl'.format(round_number))
