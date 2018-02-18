@@ -14,15 +14,13 @@ from src.models import train_RFC
 from src.models.manage_model_files import *
 
 def predict_with_noise(df, model, features, noise=0.0):
-    df_predict = df.loc[(df['data_type'] == 'validation') |
-                        (df['data_type'] == 'test') |
-                        (df['data_type'] == 'live'), :]
+    df = df.loc[(df['data_type'] != 'train'),:]
     drop_columns = ['era','data_type', 'target']
-    df_features = df_predict.drop(drop_columns, axis=1).iloc[:,features]
-    df_predict.loc[:,'probability'] = model.predict_proba(df_features)[:,1]
-    df_predict.loc[:,'probability'] = df_predict.loc[:,'probability'] + random.uniform(-noise,noise)
+    df = df.drop(drop_columns, axis=1).iloc[:,features]
+    df['probability'] = model.predict_proba(df)[:,1]
+    df['probability'] = df['probability'] + random.uniform(-noise,noise)
                                       
-    return df_predict
+    return df
 
 def create_submission_file(df, filename):
     df.loc[:,'id'] = df.index
