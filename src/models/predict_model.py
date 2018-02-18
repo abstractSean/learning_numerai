@@ -23,7 +23,7 @@ def predict_with_noise(df, model, features, noise=0.0):
     return df
 
 def create_submission_file(df, filename):
-    df.loc[:,'id'] = df.index
+    df['id'] = df.index
     df = df.loc[:, ['id','probability']]
     df.to_csv(filename, index=False)
 
