@@ -9,9 +9,7 @@ from glob import glob
 from src.tools import numerai_api
 
 
-def get_latest_file_id(model_name, round_number=False):
-    if not round_number:
-        round_number = numerai_api.get_current_round()
+def get_latest_file_id(model_name, round_number):
     current_round_names = glob('./{}*.pkl'.format(round_number))
     current_type_names = [name for name in current_round_names
                           if model_name in name]
@@ -35,7 +33,7 @@ def get_id(model_name, id_, round_number):
         return int(id_)
 
 
-def get_filename(model_name, id_, round_number=False):
+def get_filename(model_name, id_, round_number):
     if not round_number:
         round_number = numerai_api.get_current_round()
     id_ = get_id(model_name, id_, round_number)
