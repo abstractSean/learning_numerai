@@ -29,7 +29,7 @@ def train_rfc_filtered(X_train, y_train, id_='last'):
     except FileNotFoundError:
         rfc_baseline = train_rfc(X_train, y_train)
         save_model(rfc_baseline, 'rfc_baseline', id_)
-        
+
     features = get_filtered_features(rfc_baseline, 0.020)
     X_train_filtered = X_train.iloc[:, features]
     return train_rfc(X_train_filtered, y_train), features
