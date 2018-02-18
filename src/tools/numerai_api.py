@@ -6,7 +6,6 @@ from zipfile import ZipFile
 
 
 def numerai_api_query(query):
-    
     numerai_api_url = 'https://api-tournament.numer.ai/'
     headers = {'Content-Type':'application/json',
                'Accept':'application/json'
