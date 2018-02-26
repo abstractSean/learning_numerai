@@ -1,0 +1,39 @@
+AbstractState:
+-wait for new round
+-get data
+-train model
+--multiple models?
+-check model - consistency & concordance?
+-ensemble models?
+-prepare submission
+-submit
+-randomize
+
+waiting
+-until 10am sat > get new data
+
+getting_data
+-download if new data, otherwise load last/specified round
+
+train (in parallel?)
+-train sub models
+-linear regressions
+-random forests
+-deep learning
+-SVM
+-GBM
+
+
+ensemble
+-combine model predictions
+
+prepare_submission
+-convert to csv
+
+submit
+-use API to submit, wait for confirmation
+-if original > wait for next round
+-if not original > randomize
+
+randomize
+-add noise > submit
