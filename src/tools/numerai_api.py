@@ -17,7 +17,7 @@ def numerai_api_query(query):
 
 
 def get_current_round():
-    rounds_query = {'query': '{rounds {number}}'}
+    rounds_query = {'query': '{rounds (tournament: 1) {number}}'}
     data = numerai_api_query(rounds_query)['data']['rounds']
     round_numbers = [number for rounds in data 
                      for number in rounds.values()]
@@ -26,10 +26,10 @@ def get_current_round():
 
 
 def get_dataset_url():
-    dataset_query = {'query':'{dataset}'}
+    dataset_query = {'query':'{dataset (tournament: 1)}'}
     return numerai_api_query(dataset_query)['data']['dataset']
 
 
 def get_dataset_round(dataset_url):
-    return dataset_url.split('/')[3]
+    return dataset_url.split('/')[4]
 
