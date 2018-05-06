@@ -4,6 +4,7 @@ import pandas as pd
 import sys
 sys.path.append('/home/sean/Projects/numerai/numerai')
 
+from math import log
 from numerapi import numerapi
 from src.data import get_raw_data
 from src.tools import numerai_api
@@ -17,7 +18,7 @@ def check_consistency(df, model):
     for era in unique_eras:
         loss = get_validation_log_loss(df.loc[df['era']==era,:], model)
 
-        if loss < 0.693:
+        if loss < -log(0.5):
             eras_passed += 1
 
     return eras_passed / len(unique_eras)
