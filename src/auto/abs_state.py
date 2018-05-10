@@ -27,6 +27,9 @@ class AbsState(metaclass=abc.ABCMeta):
     def submit(self):
         self._transition_error()
 
+    def stake(self):
+        self._transition_error()
+
     def randomize(self):
         self._transition_error()
 
