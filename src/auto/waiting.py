@@ -11,4 +11,11 @@ class Waiting(AbsState):
         self._model.state = self._model.getting_data
 
     def wait(self):
-        pass        
+        print('Waiting for new round')
+        time.sleep(5)
+        
+        if self._model.napi.check_new_round():
+            self.get_data()
+        else:
+            self.wait()
+
