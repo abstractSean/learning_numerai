@@ -1,3 +1,5 @@
+import os
+
 from waiting import Waiting
 from getting_data import GettingData
 from training import Training
@@ -7,6 +9,8 @@ from preparing import Preparing
 from submitting import Submitting
 from staking import Staking
 
+from numerapi.numerapi import NumerAPI
+from dotenv import find_dotenv, load_dotenv
 
 class AutoModel:
     def __init__(self):
@@ -20,6 +24,8 @@ class AutoModel:
         self.staking = Staking(self)
 
         self.state = self.waiting
+        self.napi = self.get_napi() 
+        # self.wait()
 
     def wait(self):
         self.state.wait()
@@ -47,4 +53,11 @@ class AutoModel:
 
     def randomize(self):
         self.state.randomize()
+    
+    def get_napi(user='NUMERAI'):
+        dotenv_path = find_dotenv()
+        load_dotenv(dotenv_path)
+        public_id = os.environ.get('{}_SUBMIT_ID'.format(user))
+        secret_key = os.environ.get('{}_SUBMIT_KEY'.format(user))
+        return NumerAPI(public_id, secret_key, verbosity='info')
 
