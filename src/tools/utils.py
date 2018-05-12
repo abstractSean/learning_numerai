@@ -4,6 +4,8 @@ import pandas as pd
 import sys
 sys.path.append('/home/sean/Projects/numerai/numerai')
 
+from math import log
+from numerapi import numerapi
 from src.data import get_raw_data
 from src.tools import numerai_api
 
@@ -16,7 +18,7 @@ def check_consistency(df, model):
     for era in unique_eras:
         loss = get_validation_log_loss(df.loc[df['era']==era,:], model)
 
-        if loss < 0.693:
+        if loss < -log(0.5):
             eras_passed += 1
 
     return eras_passed / len(unique_eras)
@@ -39,7 +41,7 @@ def get_validation_log_loss(df, model):
 
 def load_data(round_number=False):
     if not round_number:
-        round_number = numerai_api.get_current_round()
+        round_number = numerapi.NumerAPI().get_current_round()
     project_dir = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
     raw_data_path = os.path.join(project_dir, 'data','raw')
     raw_data_file = os.path.join(raw_data_path, '{}_numerai_raw.pkl'.format(round_number))
