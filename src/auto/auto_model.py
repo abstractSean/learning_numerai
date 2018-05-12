@@ -25,8 +25,14 @@ class AutoModel:
 
         self.state = self.waiting
         self.napi = self.get_napi() 
-        # self.wait()
 
+    def start(self,test=False):
+        if test:
+            self.state.get_data()
+        else:
+            self.state.wait(0)
+        
+        
     def wait(self):
         self.state.wait()
 
