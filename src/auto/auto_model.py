@@ -25,7 +25,11 @@ class AutoModel:
 
         self.state = self.waiting
         self.napi = self.get_napi() 
-
+        
+        log_fmt = '%(asctime)s - %(levelname)s - %(message)s'
+        logging.basicConfig(level=logging.INFO, format=log_fmt)
+        self.logger = logging.getLogger()
+    
     def start(self,test=False):
         if test:
             self.state.get_data()
