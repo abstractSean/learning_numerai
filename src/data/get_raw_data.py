@@ -10,8 +10,8 @@ sys.path.append('/home/sean/Projects/numerai/numerai')
 
 from dotenv import find_dotenv, load_dotenv
 from io import BytesIO
+from numerapi import NumerAPI
 from requests import Session
-from src.tools.numerai_api import get_dataset_url, get_dataset_round
 from zipfile import ZipFile
 
 
@@ -57,9 +57,11 @@ def df_to_numeric(df):
 def main(project_dir):
     logger = logging.getLogger(__name__)
     logger.info('Getting raw data')
+    
+    napi = NumerAPI()
 
-    dataset_url = get_dataset_url()
-    round_number = get_dataset_round(dataset_url)
+    dataset_url = napi.get_dataset_url()
+    round_number = napi.get_current_round()
     dataset_filename = '{}_numerai_raw.pkl'.format(round_number)
     raw_data_path = os.path.join(project_dir, 'data', 'raw')
     raw_data_file = os.path.join(raw_data_path, dataset_filename)
