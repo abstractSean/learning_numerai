@@ -1,4 +1,8 @@
+import logging
 import os
+import sys
+sys.path.append('/home/sean/Projects/learning_numerai/')
+sys.path.append('/home/sean/Projects/numerai/numerai')
 
 from waiting import Waiting
 from getting_data import GettingData
