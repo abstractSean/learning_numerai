@@ -1,5 +1,5 @@
-from learning_numerai import AutoModel
-from learning_numerai import Waiting
+from src import AutoModel
+from src import Waiting
 
 
 def test_AutoModel():
