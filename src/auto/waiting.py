@@ -1,5 +1,6 @@
-from abs_state import AbsState
 import sched, time
+
+from .abs_state import AbsState
 
 day_length = 86400 # seconds
 week_length = 7 # days

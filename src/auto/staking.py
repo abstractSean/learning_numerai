@@ -1,4 +1,4 @@
-from abs_state import AbsState
+from .abs_state import AbsState
 
 class Staking(AbsState):
 

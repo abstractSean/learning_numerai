@@ -1,20 +1,19 @@
 import logging
 import os
 import sys
-sys.path.append('/home/sean/Projects/learning_numerai/')
-sys.path.append('/home/sean/Projects/numerai/numerai')
 
-from waiting import Waiting
-from getting_data import GettingData
-from training import Training
-from checking import Checking
-from ensembling import Ensembling
-from preparing import Preparing
-from submitting import Submitting
-from staking import Staking
-
-from numerapi.numerapi import NumerAPI
+from numerapi import NumerAPI
 from dotenv import find_dotenv, load_dotenv
+
+from .waiting import Waiting
+from .getting_data import GettingData
+from .training import Training
+from .checking import Checking
+from .ensembling import Ensembling
+from .preparing import Preparing
+from .submitting import Submitting
+from .staking import Staking
+
 
 class AutoModel:
     def __init__(self):

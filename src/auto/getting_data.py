@@ -1,4 +1,4 @@
-from abs_state import AbsState
+from .abs_state import AbsState
 from src.tools import utils
 
 class GettingData(AbsState):
