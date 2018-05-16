@@ -1,5 +1,5 @@
-from src.auto.auto_model import AutoModel
-from src.auto.waiting import Waiting
+from learning_numerai import AutoModel
+from learning_numerai import Waiting
 
 
 def test_AutoModel():
