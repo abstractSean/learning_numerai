@@ -7,17 +7,16 @@ class GettingData(AbsState):
         model = self._model
         model.logger.info('Getting data.')
 
-        if model.test:
-            self._model.state = self._model.training
-        else:
+        if not model.test:
             model.df = utils.load_data()
 
-            model.X_train = self._model.df.loc[
-                                    self._model.df['data_type']=='train',
+            model.X_train = model.df.loc[
+                                    model.df['data_type']=='train',
                                     'feature1':'feature50']
-            model.y_train = self._model.df.loc[
-                        self._model.df['data_type']=='train',
-                        'target']
+            model.y_train = model.df.loc[
+                                    model.df['data_type']=='train',
+                                    'target']
 
+        self._model.state = self._model.training
 
 
