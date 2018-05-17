@@ -16,7 +16,8 @@ from .staking import Staking
 
 
 class AutoModel:
-    def __init__(self):
+    def __init__(self, test=False):
+        self.test = test
         self.waiting = Waiting(self)
         self.getting_data = GettingData(self)
         self.training = Training(self)
@@ -33,11 +34,6 @@ class AutoModel:
         logging.basicConfig(level=logging.INFO, format=log_fmt)
         self.logger = logging.getLogger()
     
-    def start(self,test=False):
-        if test:
-            self.test = True
-        self.state.auto_wait(0)
-        
         
     def wait(self):
         self.state.wait()
