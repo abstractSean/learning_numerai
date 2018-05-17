@@ -8,9 +8,6 @@ week_length = 7 # days
 
 class Waiting(AbsState):
 
-    def get_data(self):
-        self._model.state = self._model.getting_data
-
     def auto_wait(self, seconds=5):
         self._model.logger.info('Waiting for new round')
         time.sleep(seconds)
@@ -26,6 +23,7 @@ class Waiting(AbsState):
         if (self._model.napi.check_new_round()
             or self._model.test):
             self._model.logger.info('New round available')
+            self._model.state = self._model.getting_data
             return True
         else:
             self._model.logger.info('No new round')
