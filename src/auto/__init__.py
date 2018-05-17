@@ -1,6 +1,7 @@
 from .waiting import Waiting
 from .getting_data import GettingData
 from .training import Training
+from .predicting import Predicting
 from .checking import Checking
 from .ensembling import Ensembling
 from .preparing import Preparing

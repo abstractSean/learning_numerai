@@ -1,14 +1,16 @@
 import pytest
 
 from src import AutoModel
-from src.auto import Waiting
-from src.auto import GettingData
-from src.auto import Training
-from src.auto import Checking
-from src.auto import Ensembling
-from src.auto import Preparing
-from src.auto import Submitting
-from src.auto import Staking
+from src.auto import (Waiting,
+                      GettingData,
+                      Training,
+                      Predicting,
+                      Checking,
+                      Ensembling,
+                      Preparing,
+                      Submitting,
+                      Staking,
+                      )
 
 
 @pytest.fixture(scope='function', name='auto')
@@ -24,13 +26,15 @@ def test_AutoModel(auto):
     auto.get_data()
     assert type(auto.state) == type(Training(None))
     auto.train()
+    assert type(auto.state) == type(Predicting(None))
+    auto.predict()
     assert type(auto.state) == type(Checking(None))
     auto.check()
-    assert type(auto.state) == type(Ensembling(None))
-    auto.prepare_submission()
     assert type(auto.state) == type(Preparing(None))
-    auto.submit()
+    auto.prepare_submission()
     assert type(auto.state) == type(Submitting(None))
-    auto.stake()
+    auto.submit()
     assert type(auto.state) == type(Staking(None))
+    auto.stake()
+    assert type(auto.state) == type(Waiting(None))
     

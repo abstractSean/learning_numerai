@@ -8,6 +8,7 @@ from dotenv import find_dotenv, load_dotenv
 from .waiting import Waiting
 from .getting_data import GettingData
 from .training import Training
+from .predicting import Predicting
 from .checking import Checking
 from .ensembling import Ensembling
 from .preparing import Preparing
@@ -21,6 +22,7 @@ class AutoModel:
         self.waiting = Waiting(self)
         self.getting_data = GettingData(self)
         self.training = Training(self)
+        self.predicting = Predicting(self)
         self.checking = Checking(self)
         self.ensembling = Ensembling(self)
         self.preparing = Preparing(self)
@@ -46,6 +48,9 @@ class AutoModel:
 
     def check(self):
         self.state.check()
+
+    def predict(self):
+        self.state.predict()
 
     def ensemble(self):
         self.state.ensemble()
