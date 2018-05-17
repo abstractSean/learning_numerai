@@ -36,9 +36,7 @@ class AutoModel:
     def start(self,test=False):
         if test:
             self.test = True
-            self.state.get_data()
-        else:
-            self.state.auto_wait(0)
+        self.state.auto_wait(0)
         
         
     def wait(self):

@@ -13,10 +13,12 @@ class Waiting(AbsState):
         self._model.get_data()
 
     def auto_wait(self, seconds=5):
-        print('Waiting for new round')
+        self._model.logger.info('Waiting for new round')
         time.sleep(seconds)
         
-        if self._model.napi.check_new_round():
+        if (self._model.napi.check_new_round()
+            or self._model.test):
+            self._model.logger.info('New round available')
             self.get_data()
         else:
             self.auto_wait()
