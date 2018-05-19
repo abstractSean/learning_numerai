@@ -11,7 +11,7 @@ class GettingData(AbsState):
         if m.test:
             self._model.state = self._model.training
             return
-        
+
         m.df = utils.load_data()
 
         m.X_train = m.df.loc[m.df['data_type']=='train',
