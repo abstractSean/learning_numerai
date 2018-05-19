@@ -6,7 +6,7 @@ sys.path.append('../..')
 from sklearn.ensemble import RandomForestClassifier
 
 from src.tools import numerai_api, utils
-from src.models.manage_model_files import *
+from src.tools.manage_model_files import *
 
 def train_rfc(X_train, y_train):
     rfc = RandomForestClassifier(n_jobs=-1,
