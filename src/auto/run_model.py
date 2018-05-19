@@ -9,7 +9,9 @@ week_length = 7     # days
 
 
 def wait_loop(model, seconds):
-    if model.check():
+    model.check()
+
+    if model.new_round:
         model.get_data()
     else:
         logger.info('Waiting for new round')
@@ -24,7 +26,7 @@ def main():
     model.train()
     model.predict()
     model.check()
-    model.prepare()
+    model.prepare_submission()
     model.submit()
     model.stake()
     

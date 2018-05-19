@@ -30,8 +30,8 @@ class AutoModel:
         self.staking = Staking(self)
 
         self.state = self.waiting
-        self.napi = self.get_napi() 
-        
+        self.get_napi()
+
         log_fmt = '%(asctime)s - %(levelname)s - %(message)s'
         logging.basicConfig(level=logging.INFO, format=log_fmt)
         self.logger = logging.getLogger()
@@ -70,10 +70,10 @@ class AutoModel:
     def randomize(self):
         self.state.randomize()
     
-    def get_napi(user='NUMERAI'):
+    def get_napi(self, user='NUMERAI'):
         dotenv_path = find_dotenv()
         load_dotenv(dotenv_path)
         public_id = os.environ.get('{}_SUBMIT_ID'.format(user))
         secret_key = os.environ.get('{}_SUBMIT_KEY'.format(user))
-        return NumerAPI(public_id, secret_key, verbosity='info')
+        self.napi = NumerAPI(public_id, secret_key, verbosity='info')
 

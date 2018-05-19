@@ -10,10 +10,10 @@ class Waiting(AbsState):
             or m.test):
             m.logger.info('New round available')
             self._model.state = self._model.getting_data
-            return True
+            m.new_round = True
         else:
             m.logger.info('No new round')
-            return False
+            m.new_round = False
 
     def stop_waiting(self):
         self._model.state = self._model.getting_data
