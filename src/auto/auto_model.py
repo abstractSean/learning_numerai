@@ -40,6 +40,9 @@ class AutoModel:
     def wait(self):
         self.state.wait()
 
+    def stop_waiting(self):
+        self.state.stop_waiting()
+
     def get_data(self):
         self.state.get_data()
 

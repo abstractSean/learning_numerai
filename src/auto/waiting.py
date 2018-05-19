@@ -14,3 +14,7 @@ class Waiting(AbsState):
         else:
             m.logger.info('No new round')
             return False
+
+    def stop_waiting(self):
+        self._model.state = self._model.getting_data
+
