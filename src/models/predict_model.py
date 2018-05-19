@@ -10,8 +10,8 @@ from dotenv import load_dotenv, find_dotenv
 from numerapi import numerapi
 
 from src.tools import numerai_api, utils
+from src.tools.manage_model_files import *
 from src.models import train_RFC
-from src.models.manage_model_files import *
 
 def predict_with_noise(df, model, features, noise=0.0):
     df = df.loc[(df['data_type'] != 'train'),:]

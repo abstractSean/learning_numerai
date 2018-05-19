@@ -1,22 +1,16 @@
-from abs_state import AbsState
-import sched, time
-
-day_length = 86400 # seconds
-week_length = 7 # days
+from .abs_state import AbsState
 
 
 class Waiting(AbsState):
 
-    def get_data(self):
-        self._model.state = self._model.getting_data
-        self._model.get_data()
-
-    def wait(self, seconds=5):
-        print('Waiting for new round')
-        time.sleep(seconds)
-        
-        if self._model.napi.check_new_round():
-            self.get_data()
+    def check(self):
+        m = self._model
+        m.logger.info('Checking for new round')
+        if (m.napi.check_new_round()
+            or m.test):
+            m.logger.info('New round available')
+            self._model.state = self._model.getting_data
+            return True
         else:
-            self.wait()
-
+            m.logger.info('No new round')
+            return False

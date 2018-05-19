@@ -14,13 +14,16 @@ class AbsState(metaclass=abc.ABCMeta):
 
     def train(self):
         self._transition_error()
+    
+    def predict(self):
+        self._transition_error()
 
     def check(self):
         self._transition_error()
 
     def ensemble(self):
         self._transition_error()
-
+        
     def prepare_submission(self):
         self._transition_error()
 

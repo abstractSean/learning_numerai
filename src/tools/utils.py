@@ -5,11 +5,11 @@ import sys
 sys.path.append('/home/sean/Projects/numerai/numerai')
 
 from math import log
-from numerapi import numerapi
+from numerapi import NumerAPI
 from src.data import get_raw_data
-from src.tools import numerai_api
 
 from sklearn.metrics import log_loss
+
 
 def check_consistency(df, model):
     eras_passed = 0
@@ -40,8 +40,10 @@ def get_validation_log_loss(df, model):
 
 
 def load_data(round_number=False):
+    napi = NumerAPI()
+
     if not round_number:
-        round_number = numerapi.NumerAPI().get_current_round()
+        round_number = napi.get_current_round()
     project_dir = os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
     raw_data_path = os.path.join(project_dir, 'data','raw')
     raw_data_file = os.path.join(raw_data_path, '{}_numerai_raw.pkl'.format(round_number))

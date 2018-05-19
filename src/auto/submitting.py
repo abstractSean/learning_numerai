@@ -1,12 +1,17 @@
-from abs_state import AbsState
+from .abs_state import AbsState
+
 
 class Submitting(AbsState):
 
-    def check(self):
-        self._model.state = self._model.checking
+    def submit(self):
+        m = self._model
+        m.logger.info('Submitting')
+        
+        if m.test:
+            self._model.state = self._model.staking
+            return
 
-    def stake(self):
+        m.napi.upload_predictions(m.filename)
+        
         self._model.state = self._model.staking
 
-    def wait(self):
-        self._model.state = self._model.waiting
