@@ -1,7 +1,7 @@
 import logging
 import sched, time
 
-from .auto_model import AutoModel
+from src.auto.auto_model import AutoModel
 
 
 day_length = 86400  # seconds
@@ -14,7 +14,7 @@ def wait_loop(model, seconds):
     else:
         logger.info('Waiting for new round')
         time.sleep(seconds)
-        wait_loop()
+        wait_loop(model, 10)
 
 
 def main():
